@@ -1,0 +1,59 @@
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace SethNorton_ClosestNumbers
+{
+    class ClosestNumbersDriver
+    {
+        static void Main(string[] args)
+        {
+            TextWriter textWriter = new StreamWriter(@System.Environment.GetEnvironmentVariable("OUTPUT_PATH"), true);
+
+            int n = Convert.ToInt32(Console.ReadLine());
+
+            int[] arr = Array.ConvertAll(Console.ReadLine().Split(' '), arrTemp => Convert.ToInt32(arrTemp))
+            ;
+            int[] result = ClosestNumbers(arr);
+
+            textWriter.WriteLine(string.Join(" ", result));
+
+            textWriter.Flush();
+            textWriter.Close();
+        }
+       
+        static int[] ClosestNumbers(int[] arr)
+        {
+            Array.Sort(arr);
+            int[] closestNumbers = new int[arr.Length];
+            int difference = 0;
+            bool firstpair = true;
+            int counter = 0;
+            for (int i = 0; i < arr.Length - 1; i++)
+            {
+                int pairDifference = arr[i + 1] - arr[i];
+                if (pairDifference <= difference || firstpair == true)
+                {
+                    if (pairDifference < difference)
+                    {
+                        Array.Clear(closestNumbers, 0, closestNumbers.Length);
+                        counter = 0;
+                    }
+                    closestNumbers[counter++] = arr[i];
+                    closestNumbers[counter++] = arr[i + 1];
+                    difference = pairDifference;
+                }
+                firstpair = false;
+            }
+            int[] closestNumbersActualSize = new int[counter];
+            for (int i = 0; i < counter; i++)
+                closestNumbersActualSize[i] = closestNumbers[i];
+
+            return closestNumbersActualSize;
+
+        }
+    }
+}

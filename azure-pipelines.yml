@@ -31,6 +31,6 @@ steps:
 - task: DotNetCoreCLI@2
   inputs:
     command: test
-    projects: 'SethNorton06.ClosestNumbers/TestsForWidgetTesting/TestsForWidgetTesting.csproj'
+    projects: 'SethNorton06.ClosestNumbers/TestsForWidgetTesting/*.csproj'
     arguments: '--configuration $(buildConfiguration)'
 
